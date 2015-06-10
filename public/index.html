@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GitHub Public Events Feed</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+</head>
+	
+
+<body>
+
+	<h1>GitHub Public Events Feed</h1>
+
+	<div ng-app="myApp" ng-controller="customersCtrl" ng-init="initFirst()"> 
+
+	<button ng-click='refresh()'>Refresh Feed</button><br><br>
+
+	<ul>
+  		<li ng-repeat="event in events">
+  			<img src="{{event.actor.avatar_url}}" alt="" height="60" width="60">
+  			<a href ng-click="toggle()">{{event.actor.login}} - {{event.type}} - {{event.repo.name}}</a>
+  			</br>
+  			<br>
+  			<p ng-hide="hideThis"><strong>Event Id - </strong>{{event.id}}, <strong>Event Type - </strong>{{event.type}}</p>
+  			<p ng-hide="hideThis"><strong>User Id - </strong>{{event.actor.id}}, <strong>User Login - </strong>{{event.actor.login}}, <strong>User URL - </strong>{{event.actor.url}}, <strong>User Avatar URL - </strong>{{event.actor.avatar_url}}</p> 
+  			<p ng-hide="hideThis"><strong>Repository Id - </strong>{{event.repo.id}}, <strong>Repository Name - </strong>{{event.repo.name}}, <strong>Repository URL - </strong>{{event.repo.url}}</p>
+  			<p ng-hide="hideThis"><strong>Payload Action - </strong>{{event.payload.action}}, <strong>Payload Reference - </strong>{{event.payload.ref}}, <strong>Payload Reference Type - </strong>{{event.payload.ref_type}}</p> 
+  			<p ng-hide="hideThis"><strong>Is Event Public - </strong>{{event.public}}</p> 
+  			<p ng-hide="hideThis"><strong>Created at - </strong>{{event.created_at}}</p> 
+
+  			<br>
+  		</li>
+	</ul>
+
+
+
+	</div>
+
+	<script>
+
+		var app = angular.module('myApp', []);
+		app.controller('customersCtrl', function($scope, $http) {
+
+		$scope.hideThis = false;
+		
+		$scope.toggle = function () {
+			$scope.hideThis = !$scope.hideThis;
+		}
+			
+		
+		$scope.refresh = function() {
+			$scope.initFirst();
+		}
+
+		$scope.initFirst = function() {
+
+			$http({
+  			method: 'JSONP',
+  			url: 'https://api.github.com/events?callback=JSON_CALLBACK&per_page=200'
+			}).success(function (response) {$scope.events = response.data;});
+
+		};
+
+	});
+
+
+	</script>
+
+</body>
+</html>
