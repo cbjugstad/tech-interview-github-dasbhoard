@@ -1,6 +1,24 @@
 # Technical Interview Homework: GitHub Dashboard
 
-##
+##Instructions to run the assignment
+1. Hosted webpage (for running on mobile web platoform) -
+	>> Please enter the following URL on any phone/tablet web browser: http://www.luvishkatyal.com/githubfeed/
+2. To run/test on local machine, following are the steps:
+	>> Go to Public folder
+	>> Download and save "index.html" file on your local machine
+	>> Double click "index.html" 
+
+##Information useful for the reviewer
+1. Minimum Requirements:
+	>> Compeleted all.
+2. Optional enchancements fulfiled:
+	>> Display a user's avatar next to their name.
+	>> Support screen rotation
+
+>> Approach:
+I opted for Mobile Web Platform; making it cross-platform
+>> Languages/Frameworks used:
+HTML, CSS, JavaScript, AngularJS, jQuery and jQuery Mobile
 
 ##Purpose
 The purpose of this exercise is to assess the candidate’s ability to build cross platform software clients that satisfy stated requirements. The completed assignment should not only satisfy the requirements outlined below, but also give the candidate an opportunity to show-off their skills.
