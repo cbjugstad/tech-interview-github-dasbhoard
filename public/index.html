@@ -76,7 +76,7 @@
 
   				<!--User details!-->
   				<p ng-hide="hideThis"><strong>User Details</strong></p>
-  				<p ng-hide="hideThis">User Id- {{event.actor.id}}, User Login- {{event.actor.login}}, User URL- {{event.actor.url}}, User Avatar URL- {{event.actor.avatar_url}}</p>
+  				<p ng-hide="hideThis">User Id- {{event.actor.id}}, User Login- {{event.actor.login}}, User URL- {{event.actor.url}}, User Avatar URL- {{event.actor.avatar_url}}, User Gravatar Id- "{{event.actor.gravator_id}}"</p>
 
   				<!--Repository details!-->
   				<p ng-hide="hideThis"><strong>Repository Details</strong></p> 
@@ -84,7 +84,11 @@
 
   				<!--Payload details!-->
   				<p ng-hide="hideThis"><strong>Payload Details</strong></p> 
-  				<p ng-hide="hideThis">Payload Action- {{event.payload.action}}, Payload Reference- {{event.payload.ref}}, Payload Reference Type- {{event.payload.ref_type}}</p> 
+  				<p ng-hide="hideThis">Payload Push Id- "{{event.payload.push_id}}", Payload Size- "{{event.payload.size}}", Payload Distinct Size- "{{event.payload.distinct_size}}", Payload Reference- "{{event.payload.ref}}", Payload Head- "{{event.payload.head}}", Payload Before- "{{event.payload.before}}", Payload Action- "{{event.payload.action}}", Payload Reference- "{{event.payload.ref}}", Payload Reference Type- "{{event.payload.ref_type}}"</p> 
+
+          <!--Organization details!-->
+          <p ng-hide="hideThis"><strong>Organization Details</strong></p> 
+          <p ng-hide="hideThis">Organization Id- "{{event.org.id}}", Organization Login- "{{event.org.login}}", Organization URL- "{{event.org.url}}", Organization Avatar URL- "{{event.org.avatar_url}}"</p> 
 
   				<br>
   			</li>
@@ -121,7 +125,7 @@
 
 			$http({
   			method: 'JSONP',
-  			url: 'https://api.github.com/events?callback=JSON_CALLBACK&per_page=200'
+  			url: 'https://api.github.com/events?callback=JSON_CALLBACK&per_page=300'
 			}).success(function (response) {$scope.events = response.data;});
 
 		};
