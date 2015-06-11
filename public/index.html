@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- Include meta tag to ensure proper rendering and touch zooming -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include jQuery Mobile stylesheets -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <!-- Include the jQuery library -->
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <!-- Include the jQuery Mobile library -->
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <!--Head Title!-->
+  <title>GitHub Public Events Feed</title>
+
+  <!--bootstrap css!-->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+	<!--angular library!-->
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+	<script>
+
+	//for better user interface 
+	$(document).ready(function(){
+        $("h1").css({"font-size": "125%"});
+        $("#heading").css({"font-size": "175%"});
+        $("#refreshButton").css({"font-size": "100%"});
+    	});
+	</script>
+
+</head>
+	
+
+<body>
+
+	<div data-role="page">
+  		<div data-role="header">
+    	<h1>GitHub Feed</h1>
+  	</div>
+
+  	<h1 id="heading">Public Events Feed</h1>
+
+ 	<div data-role="main" class="ui-content">
+
+		<div ng-app="myApp" ng-controller="customersCtrl" ng-init="initFirst()"> 
+
+		<!--refresh feed button!-->
+		<button id="refreshButton" ng-click='refresh()'>Refresh Feed</button><br><br>
+
+
+		<!--lists of github public events feed!-->
+		<ul>
+  			<li ng-repeat="event in events">
+
+  				<!--avatar of the user!-->
+  				<img src="{{event.actor.avatar_url}}" alt="" height="60" width="60">
+
+  				<!--username, event type and repository name!-->
+  				<a href ng-click="toggle()">Username - {{event.actor.login}}, Event Type - {{event.type}} - Repository Name - {{event.repo.name}}</a>
+  				</br>
+  				<br>
+
+  				<!--All Event details!-->
+
+  				<!--Date created!-->
+  				<p ng-hide="hideThis"><strong>Event Created at- </strong>{{event.created_at}}</p>
+
+  				<!--Public/Private!-->
+  				<p ng-hide="hideThis"><strong>Is Event Public- </strong>{{event.public}}</p> 
+
+  				<!--Event details!-->
+  				<p ng-hide="hideThis"><strong>Event Details</strong></p>
+  				<p ng-hide="hideThis">Event Id- {{event.id}}, Event Type- {{event.type}}</p>
+
+  				<!--User details!-->
+  				<p ng-hide="hideThis"><strong>User Details</strong></p>
+  				<p ng-hide="hideThis">User Id- {{event.actor.id}}, User Login- {{event.actor.login}}, User URL- {{event.actor.url}}, User Avatar URL- {{event.actor.avatar_url}}, User Gravatar Id- "{{event.actor.gravator_id}}"</p>
+
+  				<!--Repository details!-->
+  				<p ng-hide="hideThis"><strong>Repository Details</strong></p> 
+  				<p ng-hide="hideThis">Repository Id- {{event.repo.id}}, Repository Name- {{event.repo.name}}, Repository URL- {{event.repo.url}}</p>
+
+  				<!--Payload details!-->
+  				<p ng-hide="hideThis"><strong>Payload Details</strong></p> 
+  				<p ng-hide="hideThis">Payload Push Id- "{{event.payload.push_id}}", Payload Size- "{{event.payload.size}}", Payload Distinct Size- "{{event.payload.distinct_size}}", Payload Reference- "{{event.payload.ref}}", Payload Head- "{{event.payload.head}}", Payload Before- "{{event.payload.before}}", Payload Action- "{{event.payload.action}}", Payload Reference- "{{event.payload.ref}}", Payload Reference Type- "{{event.payload.ref_type}}"</p> 
+
+          <!--Organization details!-->
+          <p ng-hide="hideThis"><strong>Organization Details</strong></p> 
+          <p ng-hide="hideThis">Organization Id- "{{event.org.id}}", Organization Login- "{{event.org.login}}", Organization URL- "{{event.org.url}}", Organization Avatar URL- "{{event.org.avatar_url}}"</p> 
+
+  				<br>
+  			</li>
+		</ul>
+
+		</div>
+	</div>
+
+	<div data-role="footer">
+    	<h1>GitHub Feed</h1>
+ 	</div>
+
+	<script>
+
+
+		//controller of the app
+		var app = angular.module('myApp', []);
+		app.controller('customersCtrl', function($scope, $http) {
+
+		$scope.hideThis = true;
+		
+		//show/hide data function
+		$scope.toggle = function () {
+			$scope.hideThis = !$scope.hideThis;
+		}
+		
+		//refresh feed function
+		$scope.refresh = function() {
+			$scope.initFirst();
+		}
+
+		//making HTTP call, GET data from github api and store it in events
+		$scope.initFirst = function() {
+
+			$http({
+  			method: 'JSONP',
+  			url: 'https://api.github.com/events?callback=JSON_CALLBACK&per_page=300'
+			}).success(function (response) {$scope.events = response.data;});
+
+		};
+
+	});
+
+
+	</script>
+
+</body>
+</html>
