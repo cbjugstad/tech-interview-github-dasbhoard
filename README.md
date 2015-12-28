@@ -1,6 +1,7 @@
 # Technical Interview Homework: GitHub Dashboard
 
-##
+##Instructions
+To run the submission you must have access to the internet and a browser. Clone the repo and open the index.html file in a browser of your choice. From there you will be able to see a feed of events, refresh the feed, and log in with your github account info to see a feed of your personal events.
 
 ##Purpose
 The purpose of this exercise is to assess the candidate’s ability to build cross platform software clients that satisfy stated requirements. The completed assignment should not only satisfy the requirements outlined below, but also give the candidate an opportunity to show-off their skills.
