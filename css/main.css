@@ -1,0 +1,176 @@
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+h1 {
+  margin: 0;
+}
+
+h3, p {
+  margin: 5px 0 5px 0;
+}
+
+a {
+  padding: 10px 5px;
+  color: #6F1414;
+  border: 1px solid #6F1414;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: block;
+  max-width: 150px;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+a:hover {
+  color: #ffffff;
+  background-color: #6F1414;
+}
+
+a:active {
+  color: #ffffff;
+  background-color: #6F1414;
+  text-decoration: underline;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.header-area {
+  width: 100%;
+  background-color: #cecece;
+}
+
+.header-inner-wrap {
+  background-color: #cecece;
+  padding: 20px;
+  max-width: 980px;
+  margin: auto;
+}
+
+#user-data {
+ border-bottom: 2px solid #6F1414;
+}
+
+.user-event-area {
+  position: relative;
+}
+
+.user-area {    
+  position: relative;
+}
+
+.user-area a {
+  display:inline-block;
+}
+
+.user-area p {
+  float: left;
+}
+
+.user-area .user-image {
+  float: left;
+  max-width: 25px;
+  padding-right: 15px;
+}
+
+.middle {
+  padding: 30px 15px;
+  max-width: 980px;
+  margin: auto;
+
+}
+
+.feed-area {
+  border: 2px solid #6F1414;
+}
+
+.event {
+ border-top: 1px solid #6F1414;
+ padding: 20px;
+}
+
+.event-left {
+  max-width: 110px;
+  margin: auto;
+}
+
+.event-right {
+  text-align:center;
+  max-width: 300px;
+}
+
+.event-right a {
+  margin: auto;
+}
+
+.event-details {
+  display:none;
+}
+
+.event.active .event-details {
+  display:block;
+}
+
+.event.active span {
+  display: none;
+}
+
+.event span {
+  font-style: italic;
+  color: gray;
+  cursor: pointer;
+}
+
+.user-area-header,
+.event-area-header {
+  padding: 20px;
+
+}
+
+.padding-left-20 {
+  padding-left: 20px;
+}
+
+@media (min-width: 400px) {
+}
+
+@media (min-width: 650px) {
+  .user-area {
+    position: absolute;
+    top: 0;
+    right: 5px;
+  }
+  .event-right {
+    float: left;
+    padding-left: 20px;
+    text-align: left;
+  }
+  .event-right a {
+    margin: 0;
+  }
+  .event-left {
+    float: left;
+  }
+}
+
+@media (min-width: 800px) {
+}
+
+
+
