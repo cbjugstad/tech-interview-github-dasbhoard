@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
+    <script src='lib/jquery-p2r.min.js' type='text/javascript' defer></script>
+  </head>
+  <body>
+  <div class="page-wrap">
+    <div id="ghapidata" class="clearfix"></div>
+      <div class="header-area">
+        <div class="header-inner-wrap">
+          <h1 class="title">Github Dashboard</h1>
+        </div>
+      </div>
+      <div class="middle">
+        <div class="description-area">
+          <p>This is a dashboard that displays a list of public events from Github. You can click on individual events for more details and click "Refresh Events" to load in new public github events. You can also log in to see a feed of your Github User Events</p>
+        </div>
+        <div class="feed-area">
+          <div class="user-event-area">
+            <div class="user-area clearfix">
+              <div id="log-in-fields">
+                <input type="text" name="username" id="username" placeholder="UserName">
+                <input type="password" name="password" id="password" placeholder="Password">
+                <a href="#" id="log-in">Log In</a>
+              </div>
+            </div>
+            <h3 class="padding-left-20">User Events</h3>
+            <div id="user-data">
+              <p class="padding-left-20">Please log in to see your user Event List.</p>
+            </div>
+          </div>
+          <div class="github-event-area">
+            <div class="event-area-header">
+              <h3>Github Public Events</h3>
+              <a href="#" id="github-button">Refresh Public Events</a>
+            </div>
+            <div id="event-data"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>
