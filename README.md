@@ -1,3 +1,19 @@
+#Overview
+The purpose of this project is to ... 
+
+##Setup and prerequisites
+
+##How to run
+
+##Additional information
+
+###Extending the functionality
+
+###Future plans
+
+
+
+
 # Technical Interview Homework: GitHub Dashboard
 
 ##
