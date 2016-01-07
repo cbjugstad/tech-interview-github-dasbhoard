@@ -19,6 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .row {
           margin-bottom: 10px;
       }
+      img {
+        border-radius: 100%;
+      }
     </style>
     
     <iron-ajax 
@@ -32,9 +35,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="row">
           <paper-card title="{{item.title}}" class="col-xs-12">
             <div class="card-content">
-              <p><a href="{{item.actor.url}}">{{item.actor.login}}</a></p>
-              <p>{{item.type}}</p>
-              <p><a href="{{item.repo.url}}">{{item.repo.name}}</a></p>
+              <img src="{{item.actor.avatar_url}}" class="col-xs-2">
+              <div col="col-xs-10">
+                <p><a href="{{item.actor.url}}">{{item.actor.login}}</a></p>
+                <p>{{item.type}}</p>
+                <p><a href="{{item.repo.url}}">{{item.repo.name}}</a></p>
+              </div>
             </div>
           </paper-card>
         </div>
