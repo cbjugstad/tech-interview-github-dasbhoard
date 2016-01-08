@@ -1,0 +1,6 @@
+Full login process
+See project events
+Set fields to display in cards
+Convert card to idea
+If avatar doesn't exist, grab gravatar
+Show message in cards
