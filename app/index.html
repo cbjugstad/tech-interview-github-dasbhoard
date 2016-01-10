@@ -117,6 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
+              <git-login></git-login>
               <git-events></git-events>
               <!-- TODO - nest git-events within the user-dashboard element <user-dashboard></user-dashboard> -->
             </section>
@@ -148,13 +149,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="scripts/app.js"></script>
   <script src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="../bower_components/jquery-timeago/jquery.timeago.js"></script>
   
-  <!-- TODO move this to separate file -->
-  <script> 
-    $(document).ready(function() {
-      $("abbr.timeago").timeago();
-    });
+  <script>
+    
   </script>
   
   <!-- endbuild-->

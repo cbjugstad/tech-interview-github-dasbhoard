@@ -1,0 +1,78 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="git-login">
+  <template>
+    
+    <firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://resplendent-inferno-8422.firebaseio.com" provider="github" on-error="errorHandler"></firebase-auth>
+
+    <div id="message">[[message]]</div>
+    <br>
+
+    <paper-button raised on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</paper-button>
+    <paper-button raised on-tap="logout" hidden$="{{computeLogoutHidden(statusKnown, user)}}">Logout</paper-button>
+
+    <h3>Login status:</h3>
+    <p>{{computeLoginStatus(statusKnown, user)}}</p>
+
+    <h3>User ID:</h3>
+    <pre>{{user.uid}}</pre>
+    
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'git-login',
+
+      properties: {
+        message: {
+          type: String,
+          value: ''
+        },
+        user: {
+          type: Object,
+          value: null
+        },
+        statusKnown: {
+          type: Boolean
+        }
+      },
+      login: function() {
+        this.$.firebaseLogin.login();
+      },
+      logout: function() {
+        this.$.firebaseLogin.logout();
+      },
+      errorHandler: function(e) {
+        this.message = 'Error: ' + e.detail.message;
+      },
+      computeLoginHidden: function(statusKnown, user) {
+        return !statusKnown || !!user;
+      },
+      computeLogoutHidden: function(statusKnown, user) {
+        return !statusKnown || !user;
+      },
+      computeLoginStatus: function(statusKnown, user) {
+        if (statusKnown && user) {
+          return 'Logged in';
+        }
+        if (statusKnown) {
+          return 'Logged out';
+        }
+        return 'Unknown (checking status...)';
+      }
+    });
+  })();
+  </script>
+</dom-module>
