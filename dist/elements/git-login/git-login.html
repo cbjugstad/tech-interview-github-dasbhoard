@@ -17,12 +17,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-button raised on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</paper-button>
     <paper-button raised on-tap="logout" hidden$="{{computeLogoutHidden(statusKnown, user)}}">Logout</paper-button>
-    
-    <a href$="/user/{{user.github.username}}" hidden$="{{computeLogoutHidden(statusKnown, user)}}">My Events</a>
 
     <div id="message">[[message]]</div>
     <br>
-    <!--<p>Login status: {{computeLoginStatus(statusKnown, user)}}</p>-->
+    <p>Login status: {{computeLoginStatus(statusKnown, user)}}</p>
+
+    <pre>User ID: {{user.uid}}</pre>
     
   </template>
   <script>
