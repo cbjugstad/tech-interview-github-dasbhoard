@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
       .row {
-          margin-bottom: 10px;
+          margin-bottom: 20px;
       }
       img {
         border-radius: 100%;
@@ -33,6 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        handle-as="json"
        params="{{options}}"
        last-response="{{response}}"></iron-ajax>
+    
     <div class="container-fluid">
       <template is="dom-repeat" items="{{response}}">
         <div class="row">
@@ -69,6 +70,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'git-events',
 
       properties: {
+        user: {
+          notify: true
+        },
+        
         username: {
           value: '',
           notify: true
@@ -84,6 +89,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           computed: 'computeOptions(page)'
         }
       },
+      
+      // observers let us see when properties change so that we can call certain functions to do what we want to handle the change
+      // we can also pass in multiple properties into an observer, and the function it calls will only fire if all of the properties actually have a value
+      observers: [
+        
+      ],
       
       ready: function() {
         this._refresh(this.username);
@@ -107,19 +118,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       
       _refresh: function(username) {
-        // with the way Polymer does its javascript scoping, we need to set grab the iron-ajax call by its id (via this.$.ajax) and then use that to generate the request at fixed intervals
+        // with the way Polymer does its javascript scoping, we need to set grab the iron-ajax call by its id (via this.$.ajax) and then use that to generate the request at fixed intervals. Also, the this.$. is similar to the id selector
         var _this_ = this.$.ajax;
         
         // if you're logged in, we can make up to 5,000 requests per hour, but otherwise we can only do 60
         if (this.username == '') {
-          setInterval(function(){
+          /*setInterval(function(){
             _this_.generateRequest()
-          }, 60000);
+          }, 60000);*/
         }
         else {
-          setInterval(function(){
+          /*setInterval(function(){
             _this_.generateRequest()
-          }, 5000);
+          }, 5000);*/
         }
         
       }
