@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="git-login">
   <template>
-    <style include="shared-styles">
+    <style include="app-theme shared-styles">
       :host {
         display: block;
       }
@@ -34,16 +34,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-button on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</paper-button>
     
     <div hidden$="{{computeLogoutHidden(statusKnown, user)}}">
+      
       <paper-menu-button>
         <paper-button class="dropdown-trigger">
           <span>{{user.github.username}}</span>
           <iron-icon src="{{user.github.profileImageURL}}"></iron-icon>
         </paper-button>
-        <paper-menu class="dropdown-content centered">
+        <paper-menu class="dropdown-content">
+          <a data-route="home" href="/" on-click="onDataRouteClick">
+            <iron-icon icon="home"></iron-icon>
+            <span>All events</span>
+          </a>
+          <a data-route="user-events" href="/user/{{user.github.username}}" on-click="onDataRouteClick">
+            <iron-icon icon="home"></iron-icon>
+            <span>My events</span>
+          </a>
+          <a data-route="user-events" href="/" on-click="logout">
+            <iron-icon icon="home"></iron-icon>
+            <span>Logout</span>
+          </a>
+          <!-- TODO menu items for future navigation plans, potentially issues / other git items -->
+        </paper-menu>
+        <!--<paper-menu class="dropdown-content centered">
+          <paper-item>Settings</paper-item>
+          <paper-item>Help</paper-item>
+          <paper-item>Feedback</paper-item>
           <a href="/user/{{user.github.username}}" class="button-anchor"><paper-button>My Events</paper-button></a>
           <a href="/" class="button-anchor"><paper-button>All Public Events</paper-button></a>
           <paper-button on-tap="logout">Logout</paper-button>
-        </paper-menu>
+        </paper-menu>-->
       </paper-menu-button>
     </div>
     

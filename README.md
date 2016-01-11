@@ -18,7 +18,11 @@ gulp serve
 Once that process finishes, you'll have two ways to access the site. The first is a local IP address and port number, and the second is an IP address that other devices can access as long as they are on the same network.
 
 ##Additional information
-Inline comments have been placed to help illustrate what's happening in the code, but here's a general overview of the code structure:
+Inline comments have been placed to help illustrate what's happening in the code, but here's a general overview:
+
+A demo version of this application is also hosted on Firebase and can be located [here](https://resplendent-inferno-8422.firebaseapp.com). 
+
+A standard webflow is included to allow OAuth authentication through your Github account. Clicking the login button 
 
 #####Index.html
 The index.html file in the app folder is the main entry point into the code. This code has the standard HTML header info and then is followed by the main UI layout, which is a paper-drawer-panel with the main content changing based on page.js routing to different sections in this file. Example below:
@@ -39,6 +43,19 @@ page('/user/:username', function(data) {
   app.route = 'user-events';
   app.params = data.params;
 });
+```
+
+#####Testing Components
+The web-component-tester utility is really useful for writing unit tests against the custom elements that are created. To set it up, run the following command: 
+
+```sh
+npm install -g web-component-tester
+```
+
+Basic test components have been written for each custom element in this project, and the long-term goal is definitely to include more testing here. To run the test, run the following from the root of your project:
+
+```sh
+wct
 ```
 
 ###Future plans

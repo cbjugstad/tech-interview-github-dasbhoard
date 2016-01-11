@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+        margin: 50px;
       }
       .row {
           margin-bottom: 20px;
@@ -23,6 +24,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-radius: 100%;
         max-width: 100px;
         min-width: 20px;
+      }
+      paper-dialog {
+        --paper-dialog-background-color: white;
+        width: 100%;
+      }
+      paper-dialog.size-position {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        width: 300px;
+        height: 300px;
+        overflow: auto;
+      }
+      .card-actions {
+        text-align: center;
+      }
+      .card-actions > paper-button {
+        color: var(--accent-color);
       }
     </style>
     
@@ -52,14 +71,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </div>
             <div class="card-actions">
-              <paper-button data-dialog="dialog" on-tap="toggle">More Info</paper-button>
+              <paper-button class="action-button" data-dialog="dialog" onclick="document.querySelector('#dialog').toggle()">More Info</paper-button>
             </div>
           </paper-card>
         </div>
         
-        <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
-          <h2>Dialog Title</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <paper-dialog modal id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+          <div class="paper-font-title">{{item.actor.login}}<a target="_blank" href="{{item.actor.url}}"><paper-icon-button icon="arrow-forward"></paper-icon-button></a></div>
+          <p class="paper-font-subtitle">Placeholder stuff here for now</p>
+          <p>Event type: {{item.type}}</p>
+          <p>Repository: <a target="_blank" href="{{item.repo.url}}">{{item.repo.name}}</a></p>
+          <div class="buttons">
+            <paper-button dialog-dismiss>Done</paper-button>
+          </div>
         </paper-dialog>
       </template>
     </div>
@@ -121,7 +145,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       
       toggle: function() {
-        this.$.dialog.toggle();
+        var dialog = this.$.dialog;
+        dialog.toggle();
       },
       
       refresh: function() {
