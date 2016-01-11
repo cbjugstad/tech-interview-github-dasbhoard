@@ -21,11 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       img {
         border-radius: 100%;
+        max-width: 100px;
+        min-width: 20px;
       }
     </style>
     
     <iron-ajax 
        auto
+       id="ajax" 
        url="{{url}}"
        handle-as="json"
        params="{{options}}"
@@ -33,15 +36,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="container-fluid">
       <template is="dom-repeat" items="{{response}}">
         <div class="row">
-          <paper-card title="{{item.title}}" class="col-xs-12">
+          <paper-card heading="" class="col-xs-12">
             <div class="card-content">
               <a target="_blank" href="{{item.actor.url}}">
-                <img src="{{item.actor.avatar_url}}" class="col-xs-2">
+                <img src="{{item.actor.avatar_url}}" class="col-xs-4 col-md-2">
               </a>
-              <div col="col-xs-10">
-                <p><a target="_blank" href="{{item.actor.url}}">{{item.actor.login}}</a></p>
-                <p>{{item.type}}</p>
-                <p><a target="_blank" href="{{item.repo.url}}">{{item.repo.name}}</a></p>
+              <div col="col-xs-8 col-md-4">
+                <p>Username: <a target="_blank" href="{{item.actor.url}}">{{item.actor.login}}</a></p>
+                <p>Event type: {{item.type}}</p>
+                <p>Repository: <a target="_blank" href="{{item.repo.url}}">{{item.repo.name}}</a></p>
               </div>
             </div>
             <div class="card-actions">
@@ -67,26 +70,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         username: {
-          value: 'thockaday1',
+          value: '',
           notify: true
         },
 
         url: {
           // if either owner or repo changes, this gets recomputed
-          value: 'https://api.github.com/events',
-          notify: true
-          /* TODO - use this later when ready to layer in user specific events
+          notify: true,
           computed: 'computeUrl(username)' 
-          */
         },
 
         options: {
           computed: 'computeOptions(page)'
         }
       },
+      
+      ready: function() {
+        this._refresh(this.username);
+      },
 
       computeUrl: function(username) {
-        return ['https://api.github.com/users', username, 'events'].join('/');
+        if (this.username == '') {
+          return 'https://api.github.com/events';
+        }
+        else {
+          return ['https://api.github.com/users', username, 'events'].join('/');
+        }
       },
 
       computeOptions: function(page) {
@@ -95,6 +104,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       toggle: function() {
         this.$.dialog.toggle();
+      },
+      
+      _refresh: function(username) {
+        // with the way Polymer does its javascript scoping, we need to set grab the iron-ajax call by its id (via this.$.ajax) and then use that to generate the request at fixed intervals
+        var _this_ = this.$.ajax;
+        
+        // if you're logged in, we can make up to 5,000 requests per hour, but otherwise we can only do 60
+        if (this.username == '') {
+          setInterval(function(){
+            _this_.generateRequest()
+          }, 60000);
+        }
+        else {
+          setInterval(function(){
+            _this_.generateRequest()
+          }, 5000);
+        }
+        
       }
 			
     });

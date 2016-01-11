@@ -65,13 +65,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <paper-drawer-panel id="paperDrawerPanel">
+    <paper-drawer-panel force-narrow id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
       <paper-scroll-header-panel drawer fixed>
 
         <!-- Drawer Toolbar -->
         <paper-toolbar id="drawerToolbar">
-          <span class="paper-font-title">Menu</span>
+          <span class="paper-font-title">Logo here eventually</span>
         </paper-toolbar>
 
         <!-- Drawer Content -->
@@ -81,7 +81,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
           </a>
-          
+          <a data-route="user" href="/user" on-click="onDataRouteClick">
+            <iron-icon icon="home"></iron-icon>
+            <span>My Events</span>
+          </a>
           <!-- TODO menu items for future navigation plans, potentially issues / other git items -->
         </paper-menu>
       </paper-scroll-header-panel>
@@ -96,8 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="flex"></span>
 
           <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+          <git-login></git-login>
 
           <!-- Application name -->
           <div class="middle middle-container center horizontal layout">
@@ -117,9 +119,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
-              <git-login></git-login>
-              <git-events></git-events>
+              <paper-card id="search-card" heading="Refine results" class="col-xs-12">
+                <div class="card-content">
+                  <paper-input value="{{username::change}}" label="Username"></paper-input>
+                </div>
+              </paper-card>
+              <git-events username="{{username}}"></git-events>
               <!-- TODO - nest git-events within the user-dashboard element <user-dashboard></user-dashboard> -->
+            </section>
+            
+            <section data-route="user">
+              <git-login></git-login>
+            </section>
+            
+            <section data-route="user-events">
+              <git-events id="events" username="{{params.username}}"></git-events>
             </section>
 
           </iron-pages>

@@ -12,13 +12,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="git-login">
   <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
     
     <firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://resplendent-inferno-8422.firebaseio.com" provider="github" on-error="errorHandler"></firebase-auth>
 
-    <paper-button raised on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</paper-button>
-    <paper-button raised on-tap="logout" hidden$="{{computeLogoutHidden(statusKnown, user)}}">Logout</paper-button>
+    <paper-button on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</paper-button>
     
-    <a href$="/user/{{user.github.username}}" hidden$="{{computeLogoutHidden(statusKnown, user)}}">My Events</a>
+    <div hidden$="{{computeLogoutHidden(statusKnown, user)}}">
+      <a href$="/user/{{user.github.username}}" class="button-anchor">
+        <paper-button>My Events</paper-button>
+      </a>
+      <paper-button on-tap="logout">Logout</paper-button>
+    </div>
+    
 
     <div id="message">[[message]]</div>
     <br>
@@ -50,6 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       logout: function() {
         this.$.firebaseLogin.logout();
+        window.location.replace("/");
       },
       errorHandler: function(e) {
         this.message = 'Error: ' + e.detail.message;

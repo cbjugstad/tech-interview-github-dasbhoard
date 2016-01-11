@@ -12,3 +12,13 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
+
+.button-anchor,
+.button-anchor:hover {
+  color: inherit;
+  background-color: inherit;
+}
+
+#search-card {
+  margin-bottom: 25px;
+}

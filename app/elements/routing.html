@@ -28,8 +28,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
     
     // Specific user's page - the username will be used in conjunction with the github user username obtained from logging in
-    page('/user/:username', function(data) {
+    page('/user', function(data) {
       app.route = 'user';
+    });
+    
+    page('/user/:username', function(data) {
+      app.route = 'user-events';
       app.params = data.params;
     });
 

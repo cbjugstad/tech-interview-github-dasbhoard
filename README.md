@@ -1,22 +1,33 @@
 #Overview
-The purpose of this project is to ... 
+The purpose of this project is to create a user dashboard that can retrieve Github events via the Github API. This project is written using web components and Polymer to illustrate the candidate's desire to build modern applications when possible.
 
 ##Setup and prerequisites
+Assuming Node is installed, you can run this one liner from your project root directory to perform the necessary setup:
+
+```sh
+npm install -g gulp bower && npm install && bower install
+```
 
 ##How to run
+Once gulp is installed, the development workflow to run this project is also just a one line command:
+
+```sh
+gulp serve
+```
+
+Once that process finishes, you'll have two ways to access the site. The first is a local IP address and port number, and the second is an IP address that other devices can access as long as they are on the same network.
 
 ##Additional information
+Inline comments have been placed to help illustrate what's happening in the code, but here's a general overview of the code structure:
 
-###Extending the functionality
+Placeholder
 
 ###Future plans
+As I discover bugs or have feature ideas, I'll be posting them as issues in my Github repo. Feel free to do the same!
 
 
 
-
-# Technical Interview Homework: GitHub Dashboard
-
-##
+#Technical Interview Homework: GitHub Dashboard
 
 ##Purpose
 The purpose of this exercise is to assess the candidate’s ability to build cross platform software clients that satisfy stated requirements. The completed assignment should not only satisfy the requirements outlined below, but also give the candidate an opportunity to show-off their skills.
