@@ -20,12 +20,32 @@ Once that process finishes, you'll have two ways to access the site. The first i
 ##Additional information
 Inline comments have been placed to help illustrate what's happening in the code, but here's a general overview of the code structure:
 
-Placeholder
+#####Index.html
+The index.html file in the app folder is the main entry point into the code. This code has the standard HTML header info and then is followed by the main UI layout, which is a paper-drawer-panel with the main content changing based on page.js routing to different sections in this file. Example below:
+
+```sh
+<iron-pages attr-for-selected="data-route" selected="{{route}}">
+  <section data-route="user-events">
+    <git-events id="events" username="{{params.username}}"></git-events>
+  </section>
+</iron-pages>
+```
+
+#####Routing
+The app/elements/routing.html contains the routing information. Different anchors in the code cause different sections in the main index.html file to be displayed. The following portion of the routing.html file would render the section in the example above:
+
+```sh
+page('/user/:username', function(data) {
+  app.route = 'user-events';
+  app.params = data.params;
+});
+```
 
 ###Future plans
 As I discover bugs or have feature ideas, I'll be posting them as issues in my Github repo. Feel free to do the same!
 
-
+##
+##
 
 #Technical Interview Homework: GitHub Dashboard
 
