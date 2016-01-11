@@ -114,10 +114,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         options: {
           computed: 'computeOptions(page)'
-        },
-        
-        refresh: function() {
-          this.refresh();
         }
       },
       
@@ -155,10 +151,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var _this_ = this.$.ajax;
         _this_.generateRequest();
         
-        // if you're logged in, we can make up to 5,000 requests per hour, but otherwise we can only do 60. There may not be much of a reason to do more than 60 per hour, though so I'll keep it to 60.
-        /*setInterval(function(){
+        // if you're logged in, we can make up to 5,000 requests per hour, but otherwise we can only do 60. There may not be much of a reason to do more than 60 per hour, though so I'll keep it to 60. For testing purposes, I'll just start with doing it every five minutes.
+        setInterval(function(){
           _this_.generateRequest()
-        }, 60000);*/
+        }, 300000);
         
         /*if (this.username == '') {
           setInterval(function(){
