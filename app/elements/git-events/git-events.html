@@ -35,6 +35,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        last-response="{{response}}"></iron-ajax>
     
     <div class="container-fluid">
+      <div class="row">
+        <paper-icon-button icon="refresh" on-click="refresh" class="pull-right">Refresh</paper-icon-button>
+      </div>
       <template is="dom-repeat" items="{{response}}">
         <div class="row">
           <paper-card heading="" class="col-xs-12">
@@ -49,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>
             </div>
             <div class="card-actions">
-              <paper-icon-button data-dialog="dialog" raised on-tap="toggle">Test</paper-icon-button>
+              <paper-button data-dialog="dialog" on-tap="toggle">More Info</paper-button>
             </div>
           </paper-card>
         </div>
@@ -87,6 +90,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         options: {
           computed: 'computeOptions(page)'
+        },
+        
+        refresh: function() {
+          this.refresh();
         }
       },
       
@@ -97,7 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
       
       ready: function() {
-        this._refresh(this.username);
+        this.refresh();
       },
 
       computeUrl: function(username) {
@@ -117,21 +124,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.dialog.toggle();
       },
       
-      _refresh: function(username) {
+      refresh: function() {
+        console.log("Refreshing");
         // with the way Polymer does its javascript scoping, we need to set grab the iron-ajax call by its id (via this.$.ajax) and then use that to generate the request at fixed intervals. Also, the this.$. is similar to the id selector
         var _this_ = this.$.ajax;
         
-        // if you're logged in, we can make up to 5,000 requests per hour, but otherwise we can only do 60
-        if (this.username == '') {
-          /*setInterval(function(){
+        // if you're logged in, we can make up to 5,000 requests per hour, but otherwise we can only do 60. There may not be much of a reason to do more than 60 per hour, though so I'll keep it to 60.
+        /*setInterval(function(){
+          _this_.generateRequest()
+        }, 60000);*/
+        
+        /*if (this.username == '') {
+          setInterval(function(){
             _this_.generateRequest()
-          }, 60000);*/
+          }, 60000);
         }
         else {
-          /*setInterval(function(){
+          setInterval(function(){
             _this_.generateRequest()
-          }, 5000);*/
-        }
+          }, 5000);
+        }*/
         
       }
 			

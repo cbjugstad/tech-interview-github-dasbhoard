@@ -19,6 +19,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       iron-icon {
         margin-left: 10px;
       }
+      paper-menu {
+        width: 170px;
+      }
     </style>
     
     <firebase-auth id="firebaseLogin" 
@@ -36,14 +39,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span>{{user.github.username}}</span>
           <iron-icon src="{{user.github.profileImageURL}}"></iron-icon>
         </paper-button>
-        <paper-menu class="dropdown-content">
-          <a href$="/user/{{user.github.username}}" class="button-anchor"><paper-button>My Events</paper-button></a>
-          <a href$="/" class="button-anchor"><paper-button>All Public Events</paper-button></a>
+        <paper-menu class="dropdown-content centered">
+          <a href="/user/{{user.github.username}}" class="button-anchor"><paper-button>My Events</paper-button></a>
+          <a href="/" class="button-anchor"><paper-button>All Public Events</paper-button></a>
           <paper-button on-tap="logout">Logout</paper-button>
         </paper-menu>
       </paper-menu-button>
-      
-      
     </div>
     
   </template>
