@@ -16,8 +16,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      paper-card {
+        margin-top: 25px;
+      }
+      .card-content {
+        text-align: center;
+      }
+      paper-button {
+        font-size: 24px;
+        color: var(--accent-color);
+      }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-6">
+          <a href="/events">    
+            <paper-card image="../../images/github.png">
+              <div class="card-content">
+                <paper-button class="action-button">Events</paper-button>
+              </div>
+            </paper-card>
+          </a>
+        </div>
+        <div class="col-xs-6">
+          <a href="/issues">
+            <paper-card image="../../images/identicon.png">
+              <div class="card-content">
+                <paper-button class="action-button">Issues</paper-button>
+              </div>
+            </paper-card>
+          </a>
+        </div>
+        <div class="col-xs-6">
+          <a href="/coming-soon">
+            <paper-card image="../../images/identicon2.png">
+              <div class="card-content">
+                <paper-button class="action-button">Coming soon ...</paper-button>
+              </div>
+            </paper-card>
+          </a>
+        </div>
+        <div class="col-xs-6">
+          <a href="/coming-soon">
+            <paper-card image="../../images/identicon3.png">
+              <div class="card-content">
+                <paper-button class="action-button">Coming soon ...</paper-button>
+              </div>
+            </paper-card>
+          </a>
+        </div>
+      </div>
+    </div>
+    
   </template>
   <script>
   (function() {
@@ -27,11 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'git-selection',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'git-selection',
-          notify: true
-        }
+        
       }
     });
   })();

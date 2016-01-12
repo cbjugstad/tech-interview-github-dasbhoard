@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <p class="paper-font-subhead">Search by username to find user specific events or just leave it blank to get everyone's public events!</p> 
         <!-- we can use the value-changed here because of the notify: true on the username property in the git-events element -->
         <paper-input value="{{username::value-changed}}" label="Username" on-keyup="_handleInput"></paper-input>
-        <paper-fab icon="search" title="go"></paper-fab>
+        <paper-fab icon="search" title="go" on-click="_eventRefresh"></paper-fab>
       </div>
     </paper-card>
     
@@ -58,6 +58,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var input = document.querySelector('git-events');
           input.refresh();
         }
+      },
+      
+      _eventRefresh: function() {
+        var input = document.querySelector('git-events');
+        input.refresh();
       }
     });
   })();

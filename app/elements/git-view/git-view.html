@@ -30,9 +30,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- Drawer Content -->
         <!-- The routing here is controlled by the routing.html file, which implements page.js routing -->
         <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
-          <a data-route="home" href="/" on-click="onDataRouteClick">
+          <a data-route="home" href="/">
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
+          </a>
+          <a data-route="events" href="/events">
+            <iron-icon icon="event"></iron-icon>
+            <span>Events</span>
+          </a>
+          <a data-route="issues" href="/issues">
+            <iron-icon icon="error-outline"></iron-icon>
+            <span>Issues</span>
           </a>
           <!-- TODO menu items for future navigation plans, potentially issues / other git items -->
         </paper-menu>
@@ -57,7 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Application sub title -->
           <div class="bottom bottom-container center horizontal layout">
-              <div class="bottom-title paper-font-subhead">Event information retrieved from Github</div>
+              <div class="bottom-title paper-font-subhead">Collections of information retrieved from Github</div>
           </div>
 
         </paper-toolbar>
@@ -68,15 +76,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
+              <git-selection></git-selection>
+            </section>
+            
+            <section data-route="events">
               <git-event-search username="{{username}}"></git-event-search>
               <git-events username="{{username}}"></git-events>
-              <!-- TODO - nest git-events within the user-dashboard element <user-dashboard></user-dashboard> -->
             </section>
             
             <section data-route="user-events">
               <git-events id="events" username="{{params.username}}"></git-events>
             </section>
-
+            
+            <section data-route="coming-soon">
+              <coming-soon></coming-soon>
+            </section>
           </iron-pages>
         </div>
       </paper-scroll-header-panel>
