@@ -68,12 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
-              <paper-card id="search-card" heading="Refine results" class="col-xs-12">
-                <div class="card-content">
-                  <!-- we can use the value-changed here because of the notify: true on the username property in the git-events element -->
-                  <paper-input value="{{username::value-changed}}" label="Username"></paper-input>
-                </div>
-              </paper-card>
+              <git-event-search username="{{username}}"></git-event-search>
               <git-events username="{{username}}"></git-events>
               <!-- TODO - nest git-events within the user-dashboard element <user-dashboard></user-dashboard> -->
             </section>

@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="git-login">
   <template>
-    <style include="app-theme shared-styles">
+    <style is="custom-style" include="app-theme shared-styles">
       :host {
         display: block;
       }
@@ -21,6 +21,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       paper-menu {
         width: 170px;
+      }
+      /* The iron icon has an img built into it, and we need to drill down through the shadow dom to get to that since we're not actually including the img in the HTML for this custom element */
+      iron-icon::shadow img {
+        border-radius: 100% !important;
+      }
+      iron-icon {
+        width: 32px;
+        height: 32px;
+      }
+      paper-button {
+        text-transform: none;
       }
     </style>
     
@@ -38,19 +49,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-menu-button>
         <paper-button class="dropdown-trigger">
           <span>{{user.github.username}}</span>
-          <iron-icon src="{{user.github.profileImageURL}}"></iron-icon>
+          <iron-icon class="profile-image" src="{{user.github.profileImageURL}}"></iron-icon>
         </paper-button>
         <paper-menu class="dropdown-content centered">
           <a href="/user/{{user.github.username}}" class="button-anchor">
-            <iron-icon icon="home"></iron-icon>
-            <span>All events</span>
-          </a>
-          <a href="/" class="button-anchor">
-            <iron-icon icon="home"></iron-icon>
             <span>My events</span>
           </a>
+          <a href="/" class="button-anchor">
+            <span>All events</span>
+          </a>
           <a href="/" on-tap="logout">
-            <iron-icon icon="home"></iron-icon>
             <span>Log out</span>
           </a>
         </paper-menu>

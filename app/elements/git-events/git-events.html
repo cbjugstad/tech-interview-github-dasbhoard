@@ -15,7 +15,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
-        margin: 50px;
       }
       .row {
           margin-bottom: 20px;
@@ -45,18 +44,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     
-    <iron-ajax 
-       auto
-       id="ajax" 
-       url="{{url}}"
-       handle-as="json"
-       params="{{options}}"
-       last-response="{{response}}"></iron-ajax>
+    <!-- Because of the rate limit, instead of having the auto property set on the iron-ajax below, we'll just leave it off and handle updates (other than the regularly scheduled ones) manually -->
+    <iron-ajax  
+               id="ajax" 
+               url="{{url}}"
+               handle-as="json"
+               params="{{options}}"
+               last-response="{{response}}"></iron-ajax>
     
     <div class="container-fluid">
-      <div class="row">
-        <paper-icon-button icon="refresh" on-click="refresh" class="pull-right">Refresh</paper-icon-button>
-      </div>
+      <!-- iterate over each value in the response -->
       <template is="dom-repeat" items="{{response}}">
         <div class="row">
           <paper-card heading="" class="col-xs-12">
@@ -123,9 +120,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
       ],
       
-      ready: function() {
+      /*ready: function() {
         this.refresh();
-      },
+      },*/
 
       computeUrl: function(username) {
         if (this.username == '') {
@@ -152,9 +149,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         _this_.generateRequest();
         
         // if you're logged in, we can make up to 5,000 requests per hour, but otherwise we can only do 60. There may not be much of a reason to do more than 60 per hour, though so I'll keep it to 60. For testing purposes, I'll just start with doing it every five minutes.
-        setInterval(function(){
+        /*setInterval(function(){
           _this_.generateRequest()
-        }, 300000);
+        }, 300000);*/
         
         /*if (this.username == '') {
           setInterval(function(){

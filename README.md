@@ -25,7 +25,7 @@ A demo version of this application is also hosted on Firebase and can be located
 A standard webflow is included to allow OAuth authentication through your Github account. Clicking the login button 
 
 #####Index.html
-The index.html file in the app folder is the main entry point into the code. This code has the standard HTML header info and then is followed by the main UI layout, which is a paper-drawer-panel with the main content changing based on page.js routing to different sections in this file. Example below:
+The index.html file in the app folder (dist folder for the compiled code) is the main entry point into the code. This code has the standard HTML header info and then is followed by the main UI layout, which is mostly wrapped up in the git-view element. The git-view has a paper-drawer-panel with the main content changing based on page.js routing to different sections in this file. Example below:
 
 ```sh
 <iron-pages attr-for-selected="data-route" selected="{{route}}">

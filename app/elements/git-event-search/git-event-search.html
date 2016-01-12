@@ -1,0 +1,65 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="git-event-search">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .paper-font-display1 {
+        color: var(--accent-color);
+      }
+      paper-fab {
+        position: absolute;
+        margin-left: calc(50% - 40px);
+      }
+    </style>
+    
+    <paper-card id="search-card" class="col-xs-12">
+      <div class="card-content">
+        <p class="paper-font-display1">Whatcha lookin' for?</p>
+        <p class="paper-font-subhead">Search by username to find user specific events or just leave it blank to get everyone's public events!</p> 
+        <!-- we can use the value-changed here because of the notify: true on the username property in the git-events element -->
+        <paper-input value="{{username::value-changed}}" label="Username" on-keyup="_handleInput"></paper-input>
+        <paper-fab icon="search" title="go"></paper-fab>
+      </div>
+    </paper-card>
+    
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'git-event-search',
+
+      properties: {
+        username: {
+          type: String,
+          value: '',
+          notify: true
+        }
+      },
+      
+      _handleInput: function(e) {
+        // enter key
+        if (e.keyCode == 13) {
+          // grab the git-events custom element and call its refresh method
+          var input = document.querySelector('git-events');
+          input.refresh();
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>
