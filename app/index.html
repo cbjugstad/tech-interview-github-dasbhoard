@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit" />
-  <title>Polymer Starter Kit</title>
+  <title>User Dashboard</title>
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
@@ -65,6 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span> <!-- Allows for auto refreshes whenever you save -->
   <template is="dom-bind" id="app"> <!-- The templates are key for the custom elements to be able to do what they do. Data binding is a great way of linking values between elements without having to write a bunch of boilerplate code to sync anything up -->
 
+    <!-- Custom element that wraps the rest of the user interface. Inside there is a drawer panel with a side drawer that's hidden by default and contains some basic navigation. The main content also contains some (of the same) navigation, broken down by different custom elements for different purposes -->
     <git-view route="{{route}}"></git-view>
 
   </template>
