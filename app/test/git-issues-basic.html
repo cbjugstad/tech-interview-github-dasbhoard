@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html>
 <head>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>git-events</title>
+  <title>git-issues</title>
 
   <script src="../../bower_components/webcomponentsjs/webcomponents.min.js"></script>
   <script src="../../bower_components/web-component-tester/browser.js"></script>
@@ -20,48 +20,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../../bower_components/test-fixture/test-fixture.html">
 
   <!-- Step 1: import the element to test -->
-  <link rel="import" href="../elements/git-events/git-events.html">
+  <link rel="import" href="../elements/git-issues/git-issues.html">
 
 </head>
 <body>
 
 <test-fixture id="basic">
   <template>
-    <git-events></git-events>
+    <git-issues></git-issues>
   </template>
 </test-fixture>
 
 <script>
-  suite('git-events simple request test', function() {
-    // keep track of various parts of the ajax request
+  suite('git-issues tests', function() {
     var element;
-    var ajax;
-    var request;
-    var server;
-    var responseHeaders = {
-      json: { 'Content-Type': 'application/json' }
-    }
 
     setup(function() {
       element = fixture('basic');
-      
-      // going to use sinon to create a 'fake' server so that we can make mock HTTP requests
-      server = sinon.fakeServer.create();
-      server.respondWith(
-        'GET', /\/get_json_test.*/, [ 200, responseHeaders.json, '{"success":true}']
-      );
     });
 
     test('', function() {
 
     });
-      
-    // clean the slate - clear out any global variables or anything stored so that we can start a new test
-    teardown(function() {
-      server.restore();
-    })
-    
-    
 
   });
 </script>

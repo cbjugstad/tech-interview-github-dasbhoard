@@ -22,16 +22,25 @@ Inline comments have been placed to help illustrate what's happening in the code
 
 A demo version of this application is also hosted on Firebase and can be located [here](https://resplendent-inferno-8422.firebaseapp.com). 
 
-A standard webflow is included to allow OAuth authentication through your Github account. Clicking the login button 
+A standard webflow is included to allow OAuth authentication through your Github account. Clicking the login button will launch a new tab prompting you for your Github credentials (if you're not already signed in). Once logged in, you should get redirected back to the site. 
 
 #####Index.html
 The index.html file in the app folder (dist folder for the compiled code) is the main entry point into the code. This code has the standard HTML header info and then is followed by the main UI layout, which is mostly wrapped up in the git-view element. The git-view has a paper-drawer-panel with the main content changing based on page.js routing to different sections in this file. Example below:
 
 ```sh
 <iron-pages attr-for-selected="data-route" selected="{{route}}">
-  <section data-route="user-events">
-    <git-events id="events" username="{{params.username}}"></git-events>
+
+  <section data-route="home">
+    <git-selection></git-selection>
   </section>
+
+  <section data-route="events">
+    <git-event-search username="{{username}}" page="{{page}}"></git-event-search>
+    <git-events username="{{username}}" page="{{page}}"></git-events>
+  </section>
+  
+  ...
+  
 </iron-pages>
 ```
 
@@ -45,6 +54,8 @@ page('/user/:username', function(data) {
 });
 ```
 
+The git-selection element has links to send you to one of the events, issues or search pages, and the sections for those are located in the same area as the git-selection element on the git-view page. Right now, there are a number of similarities in the code between the structure of the events and issues elements so my hope is to eventually wrap those up into a single element to reduce the duplication. I'm creating issues in my repo to track enhancements like this.
+
 #####Testing Components
 The web-component-tester utility is really useful for writing unit tests against the custom elements that are created. To set it up, run the following command: 
 
@@ -52,14 +63,14 @@ The web-component-tester utility is really useful for writing unit tests against
 npm install -g web-component-tester
 ```
 
-Basic test components have been written for each custom element in this project, and the long-term goal is definitely to include more testing here. To run the test, run the following from the root of your project:
+Basic test components have been set up for each custom element in this project, and the long-term goal is definitely to include more testing here. To run the test, run the following from the root of your project:
 
 ```sh
 wct
 ```
 
 ###Future plans
-As I discover bugs or have feature ideas, I'll be posting them as issues in my Github repo. Feel free to do the same!
+As I discover bugs or have feature ideas, I'll be posting them as issues in my Github repo. Feel free to browse that area to see some of the thoughts I've had so far.
 
 ##
 ##
