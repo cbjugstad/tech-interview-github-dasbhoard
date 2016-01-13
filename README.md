@@ -1,5 +1,5 @@
 #Overview
-The purpose of this project is to create a user dashboard that can retrieve Github events via the Github API. This project is written using web components and Polymer to illustrate the candidate's desire to build modern applications when possible.
+The purpose of this project is to create a user dashboard that can retrieve Github events via the Github API. This project is written using web components and Polymer, using the Polymer Starter Kit as a launching point.
 
 ##Setup and prerequisites
 Assuming Node is installed, you can run this one liner from your project root directory to perform the necessary setup:
@@ -56,6 +56,9 @@ page('/user/:username', function(data) {
 
 The git-selection element has links to send you to one of the events, issues or search pages, and the sections for those are located in the same area as the git-selection element on the git-view page. Right now, there are a number of similarities in the code between the structure of the events and issues elements so my hope is to eventually wrap those up into a single element to reduce the duplication. I'm creating issues in my repo to track enhancements like this.
 
+#####Event refreshing
+Basic search fields are in place for the events and issues sections, and clicking the search button calls the API and updates results whenever on click. Also, for the events page, once the element is ready on the page, it kicks off a process that auto-refreshes the events once a minute. The frequency choice was based on the rate limits Github has in place.
+
 #####Testing Components
 The web-component-tester utility is really useful for writing unit tests against the custom elements that are created. To set it up, run the following command: 
 
@@ -71,6 +74,12 @@ wct
 
 ###Future plans
 As I discover bugs or have feature ideas, I'll be posting them as issues in my Github repo. Feel free to browse that area to see some of the thoughts I've had so far.
+
+
+###Final note
+There's definitely a large code base here, but ultimately the goal is to end up with readable HTML using some of the powerful tools the Polymer library has as a starting point to build new HTML primitives. I'm hoping this readme can help to point to where the real work is happening to minimize any potential confusion. 
+
+Happy reviewing!
 
 ##
 ##

@@ -31,13 +31,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-card id="search-card" class="col-xs-12">
       <div class="card-content">
         <p class="paper-font-title">Whatcha lookin' for?</p> 
-        <p class="paper-font-subhead">All fields are optional. Results default to my repo for now.</p> 
         <!-- we could add a ::value-changed on the username here to get real time updates of the data because of the notify: true on the username property in the git-events element, but that would cause a new API call to be made far too frequently, making us hit the rate limit very quickly -->
-        <paper-input value="{{username}}" label="Username" on-keyup="_handleInput"></paper-input>
-        <paper-input value="{{repo}}" label="Repo name" on-keyup="_handleInput"></paper-input>
-        <paper-input value="{{state}}" label="Open or closed?" on-keyup="_handleInput"></paper-input>
+        <paper-input value="{{username}}" label="Username (optional)" on-keyup="_handleInput"></paper-input>
+        <paper-input value="{{repo}}" label="Repo name (optional)" on-keyup="_handleInput"></paper-input>
+        <paper-input value="{{state}}" label="Open or closed? (optional)" on-keyup="_handleInput"></paper-input>
         <paper-input value="{{page}}"
-                     label="Page number"
+                     label="Page number (optional)"
                      allowed-pattern="[1-9]|10"
                      prevent-invalid-input
                      on-keyup="_handleInput"></paper-input>

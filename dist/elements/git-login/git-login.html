@@ -12,27 +12,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="git-login">
   <template>
-    <style include="shared-styles">
+    <style is="custom-style" include="app-theme shared-styles">
       :host {
         display: block;
       }
+      iron-icon {
+        margin-left: 10px;
+      }
+      paper-menu {
+        width: 170px;
+      }
+      /* The iron icon has an img built into it, and we need to drill down through the shadow dom to get to that since we're not actually including the img in the HTML for this custom element */
+      iron-icon::shadow img {
+        border-radius: 100% !important;
+      }
+      iron-icon {
+        width: 32px;
+        height: 32px;
+      }
+      paper-button {
+        text-transform: none;
+      }
     </style>
     
-    <firebase-auth id="firebaseLogin" user="{{user}}" status-known="{{statusKnown}}" location="https://resplendent-inferno-8422.firebaseio.com" provider="github" on-error="errorHandler"></firebase-auth>
+    <firebase-auth id="firebaseLogin" 
+                   user="{{user}}" 
+                   status-known="{{statusKnown}}" 
+                   location="https://resplendent-inferno-8422.firebaseio.com" 
+                   provider="github" 
+                   on-error="errorHandler"></firebase-auth>
 
     <paper-button on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</paper-button>
     
     <div hidden$="{{computeLogoutHidden(statusKnown, user)}}">
-      <a href$="/user/{{user.github.username}}" class="button-anchor">
-        <paper-button>My Events</paper-button>
-      </a>
-      <paper-button on-tap="logout">Logout</paper-button>
+      
+      <paper-menu-button>
+        <paper-button class="dropdown-trigger">
+          <span>{{user.github.username}}</span>
+          <iron-icon class="profile-image" src="{{user.github.profileImageURL}}"></iron-icon>
+        </paper-button>
+        <paper-menu class="dropdown-content centered">
+          <a href="/" on-tap="logout">
+            <span>Log out</span>
+          </a>
+        </paper-menu>
+      </paper-menu-button>
     </div>
-    
-
-    <div id="message">[[message]]</div>
-    <br>
-    <!--<p>Login status: {{computeLoginStatus(statusKnown, user)}}</p>-->
     
   </template>
   <script>
@@ -48,18 +73,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: ''
         },
         user: {
-          type: Object,
-          value: null
+          notify: true
         },
         statusKnown: {
           type: Boolean
-        }
+        },
+        
       },
       login: function() {
         this.$.firebaseLogin.login();
       },
       logout: function() {
         this.$.firebaseLogin.logout();
+        this.user = null;
         window.location.replace("/");
       },
       errorHandler: function(e) {

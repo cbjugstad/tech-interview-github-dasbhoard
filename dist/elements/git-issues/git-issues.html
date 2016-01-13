@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="git-events">
+<dom-module id="git-issues">
   <template>
     <style>
       :host {
@@ -45,11 +45,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .card-actions > paper-button {
         color: var(--accent-color);
       }
+      .chip {
+        text-transform: capitalize;
+        font-size: 12px;
+        background: var(--default-primary-color);
+        color: white;
+      }
     </style>
     
-    <!-- Because of the rate limit, instead of having the auto property set on the iron-ajax below, we'll just leave it off and handle updates (other than the regularly scheduled ones) manually -->
-    <iron-ajax  
-               id="ajax" 
+    <iron-ajax 
+               id="ajax"
                url="{{url}}"
                handle-as="json"
                params="{{options}}"
@@ -64,35 +69,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-card heading="" class="col-xs-12">
             <div class="card-content">
               <div class="row">
-                <p class="paper-font-title">{{item.type}}</p>
+                <p class="paper-font-subhead"><a target="_blank" href="{{item.url}}">{{item.title}}</a></p>
               </div>
               <!-- On extra small screens and small screens (phone and tablet), take up 4 of the 12 columns, but on medium and large it'll just take up 2 of the 12 -->
               <div class="row">
-                <!-- the href$ below is really nice - it lets you do compound bindings between string literals and the bind value -->
-                <a target="_blank" href$="https://github.com/{{item.actor.login}}">
-                  <img src="{{item.actor.avatar_url}}" class="col-xs-3 col-md-2"> 
+                <a target="_blank" href="{{item.user.html_url}}">
+                  <img src="{{item.user.avatar_url}}" class="col-xs-3 col-md-2"> 
                 </a>
-                <div col="col-xs-9 col-md-10">
-                  <p>Username: <a target="_blank" href$="https://github.com/{{item.actor.login}}">{{item.actor.login}}</a></p>
-                  <p>Repository: <a target="_blank" href$="https://github.com/{{item.repo.name}}">{{item.repo.name}}</a></p>
+                <div class="col-xs-9 col-md-10">
+                  <p>Username: <a target="_blank" href="{{item.user.html_url}}">{{item.user.login}}</a></p>
+                  <p>Issue types: 
+                    <template is="dom-repeat" items="{{item.labels}}">
+                      <paper-button noink class="chip">{{item.name}}</paper-button>
+                    </template>
+                  </p>
                 </div>
               </div>
             </div>
-            <div class="card-actions">
-              <paper-button class="action-button" data-dialog="dialog" onclick="document.querySelector('#dialog').toggle()">More Info</paper-button>
-            </div>
           </paper-card>
         </div>
-        
-        <paper-dialog modal id="dialog" entry-animation="fade-in-animation" exit-animation="fade-out-animation" with-backdrop>
-          <div class="paper-font-title">{{item.actor.login}}<a target="_blank" href$="https://github.com/{{item.actor.login}}"><paper-icon-button icon="arrow-forward"></paper-icon-button></a></div>
-          <p class="paper-font-subtitle">Placeholder stuff here for now</p>
-          <p>Event type: {{item.type}}</p>
-          <p>Repository: <a target="_blank" href$="https://github.com/{{item.repo.name}}">{{item.repo.name}}</a></p>
-          <div class="buttons">
-            <paper-button dialog-dismiss>Done</paper-button>
-          </div>
-        </paper-dialog>
       </template>
     </div>
       
@@ -102,50 +97,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'git-events',
+      is: 'git-issues',
 
       properties: {
-        user: {
+        // just going to default this and repo to my fields for this project for now
+        owner: {
+          value: 'thockaday1',
           notify: true
         },
-        
-        username: {
-          value: '',
+
+        repo: {
+          value: 'user-dashboard',
           notify: true
         },
 
         url: {
-          // if either owner or repo changes, this gets recomputed
-          notify: true,
-          computed: 'computeUrl(username)' 
+          /* if either owner or repo changes, this gets recomputed */
+          computed: 'computeUrl(owner, repo)'
         },
 
         options: {
-          computed: 'computeOptions(page)'
+          computed: 'computeOptions(state, page)'
         }
       },
-      
-      // observers let us see when properties change so that we can call certain functions to do what we want to handle the change
-      // we can also pass in multiple properties into an observer, and the function it calls will only fire if all of the properties actually have a value
-      observers: [
-        
-      ],
       
       /*ready: function() {
         this.refresh();
       },*/
 
-      computeUrl: function(username) {
-        if (this.username == '') {
-          return 'https://api.github.com/events';
-        }
-        else {
-          return ['https://api.github.com/users', username, 'events'].join('/');
-        }
+      computeUrl: function(owner, repo) {
+        return ['https://api.github.com/repos', owner, repo, 'issues'].join('/');
       },
 
-      computeOptions: function(page) {
-        return {page: page};
+      computeOptions: function(state, page) {
+        return {state: state, page: page};
       },
       
       toggle: function() {
@@ -176,6 +161,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }*/
         
       }
+			
+    });
+  })();
+  </script>
+</dom-module>
+
 			
     });
   })();

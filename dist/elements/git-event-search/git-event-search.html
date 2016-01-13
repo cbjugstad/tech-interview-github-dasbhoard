@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="git-issue-search">
+<dom-module id="git-event-search">
   <template>
     <style>
       :host {
@@ -31,11 +31,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-card id="search-card" class="col-xs-12">
       <div class="card-content">
         <p class="paper-font-title">Whatcha lookin' for?</p> 
-        <p class="paper-font-subhead">All fields are optional. Results default to my repo for now.</p> 
+        <p class="paper-font-subhead">All fields are optional</p> 
         <!-- we could add a ::value-changed on the username here to get real time updates of the data because of the notify: true on the username property in the git-events element, but that would cause a new API call to be made far too frequently, making us hit the rate limit very quickly -->
         <paper-input value="{{username}}" label="Username" on-keyup="_handleInput"></paper-input>
-        <paper-input value="{{repo}}" label="Repo name" on-keyup="_handleInput"></paper-input>
-        <paper-input value="{{state}}" label="Open or closed?" on-keyup="_handleInput"></paper-input>
+        <!-- The events API only allows for up to 300 events, with 30 per page across ten pages -->
         <paper-input value="{{page}}"
                      label="Page number"
                      allowed-pattern="[1-9]|10"
@@ -52,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'git-issue-search',
+      is: 'git-event-search',
 
       properties: {
         username: {
@@ -60,31 +59,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: '',
           notify: true
         },
-        repo: {
-          type: String,
-          value: '',
-          notify: true
-        },
-        state: {
-          notify: true
-        },
         page: {
           notify: true
         }
       },
       
-      
       _handleInput: function(e) {
         // enter key
         if (e.keyCode == 13) {
           // grab the git-events custom element and call its refresh method
-          var input = document.querySelector('git-issues');
+          var input = document.querySelector('git-events');
           input.refresh();
         }
       },
       
       _eventRefresh: function() {
-        var input = document.querySelector('git-issues');
+        var input = document.querySelector('git-events');
         input.refresh();
       }
     });
