@@ -44,7 +44,7 @@ The index.html file in the app folder (dist folder for the compiled code) is the
 </iron-pages>
 ```
 
-#####Routing
+#####Routing and Navigation
 The app/elements/routing.html contains the routing information. Different anchors in the code cause different sections in the main index.html file to be displayed. The following portion of the routing.html file would render the section in the example above:
 
 ```sh

@@ -16,10 +16,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-      .row {
+      .card-row {
         margin-top: 20px;
       }
-      .row:first-of-type {
+      .card-row:first-of-type {
         margin-top: 100px;
       }
       img {
@@ -49,7 +49,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <!-- Because of the rate limit, instead of having the auto property set on the iron-ajax below, we'll just leave it off and handle updates (other than the regularly scheduled ones) manually -->
     <iron-ajax  
-               auto
                id="ajax" 
                url="{{url}}"
                handle-as="json"
@@ -60,20 +59,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="container-fluid">
       <!-- iterate over each value in the response -->
       <template is="dom-repeat" items="{{response}}">
-        <div class="row">
+        <div class="row card-row">
           <!-- col-xs-12 to take up the full 12 columns on extra small + screens (all screens) -->
           <paper-card heading="" class="col-xs-12">
             <div class="card-content">
-              <!-- On extra small screens and small screens (phone and tablet), take up 4 of the 12 columns, but on medium and large it'll just take up 2 of the 12 -->
-              <div class="col-xs-2">
-                <a target="_blank" href="{{item.actor.url}}">
-                  <img src="{{item.actor.avatar_url}}"> 
-                </a>
+              <div class="row">
+                <p class="paper-font-title">{{item.type}}</p>
               </div>
-              <div col="col-xs-8 col-xs-offset-2">
-                <p>Username: <a target="_blank" href="{{item.actor.url}}">{{item.actor.login}}</a></p>
-                <p>Event type: {{item.type}}</p>
-                <p>Repository: <a target="_blank" href="{{item.repo.url}}">{{item.repo.name}}</a></p>
+              <!-- On extra small screens and small screens (phone and tablet), take up 4 of the 12 columns, but on medium and large it'll just take up 2 of the 12 -->
+              <div class="row">
+                <a target="_blank" href="{{item.actor.url}}">
+                  <img src="{{item.actor.avatar_url}}" class="col-xs-3 col-md-2"> 
+                </a>
+                <div col="col-xs-9 col-md-10">
+                  <p>Username: <a target="_blank" href="{{item.actor.url}}">{{item.actor.login}}</a></p>
+                  <p>Repository: <a target="_blank" href="{{item.repo.url}}">{{item.repo.name}}</a></p>
+                </div>
               </div>
             </div>
             <div class="card-actions">

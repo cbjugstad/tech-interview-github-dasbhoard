@@ -72,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <!-- Main Content -->
         <div class="content">
-          <!-- Data routing uses page.js - TODO item here is to add in more routes for other git related items such as issues, etc. -->
+          <!-- Iron-pages is a great way to be able to navigate between different sections via routing requests. The data routing uses page.js -->
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
 
             <section data-route="home">
@@ -102,22 +102,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </paper-drawer-panel>
     
   </template>
-  
-  <!-- Service Worker - caches information so that the app can be accessible offline -->
-  <!-- TODO - troubleshoot and optimize -->
-  <paper-toast id="caching-complete"
-               duration="6000"
-               text="Caching complete! This app will work offline.">
-  </paper-toast>
-
-  <platinum-sw-register auto-register
-                        clients-claim
-                        skip-waiting
-                        on-service-worker-installed="displayInstalledToast">
-    <platinum-sw-cache default-cache-strategy="fastest"
-                       cache-config-file="cache-config.json">
-    </platinum-sw-cache>
-  </platinum-sw-register>
   
   <script>
   (function() {
