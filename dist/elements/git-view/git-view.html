@@ -84,13 +84,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <git-events username="{{username}}" page="{{page}}"></git-events>
             </section>
             
-            <section data-route="user-events">
-              <git-events id="events" username="{{params.username}}"></git-events>
-            </section>
-            
             <section data-route="issues">
               <git-issue-search username="{{username}}" page="{{page}}"></git-issue-search>
-              <git-issues username="{{username}}" repo="{{repo}}" state="{{state}}" page="{{page}}"></git-issues>
+              <git-issues username="{{username}}" repo="{{repo}}" page="{{page}}"></git-issues>
             </section>
             
             <section data-route="coming-soon">

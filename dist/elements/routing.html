@@ -43,11 +43,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/coming-soon', function(data) {
       app.route = 'coming-soon';
     });
-    
-    page('/user/:username', function(data) {
-      app.route = 'user-events';
-      app.params = data.params;
-    });
 
     // add #! before urls
     page({
