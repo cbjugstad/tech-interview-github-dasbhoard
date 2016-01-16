@@ -53,10 +53,10 @@ page('/events', function(data) {
 });
 ```
 
-The git-selection element has links to send you to one of the events, issues or search pages, and the sections for those are located in the same area as the git-selection element on the git-view page. Right now, there are a number of similarities in the code between the structure of the events and issues elements so my hope is to eventually wrap those up into a single element to reduce the duplication. I'm creating issues in my repo to track enhancements like this.
+The git-selection element has links to send you to the events or issues pages, and the sections for those are located in the same area as the git-selection element on the git-view page. Right now, there are a number of similarities in the code between the structure of the events and issues elements so my hope is to eventually wrap those up into a single element to reduce the duplication. I'm creating issues in my repo to track enhancements like this.
 
 #####Event refreshing
-Basic search fields are in place for the events and issues sections, and clicking the search button calls the API and updates results whenever on click. Also, for the events page, once the element is ready on the page, it kicks off a process that auto-refreshes the events once a minute. The frequency choice was based on the rate limits Github has in place.
+Basic search fields are in place for the events and issues sections, and clicking the search button calls the API and updates results  on click. Also, for the events page, once the element is ready on the page, it kicks off a process that auto-refreshes the events once a minute. The frequency choice was based on the rate limits Github has in place.
 
 #####Testing Components
 The web-component-tester utility is really useful for writing unit tests against the custom elements that are created. To set it up, run the following command: 
