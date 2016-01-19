@@ -1,0 +1,115 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="git-view">
+  <template>
+    <style include="app-theme shared-styles">
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <paper-drawer-panel force-narrow id="paperDrawerPanel"> <!-- force-narrow makes the side menu (drawer) hide by default - I can see where the drawer will be useful for some future plans for this app, but currently it's not necessary -->
+      <!-- Drawer Scroll Header Panel -->
+      <paper-scroll-header-panel drawer fixed>
+
+        <!-- Drawer Toolbar -->
+        <paper-toolbar id="drawerToolbar">
+          <span class="paper-font-title">Content coming soon</span>
+        </paper-toolbar>
+
+        <!-- Drawer Content -->
+        <!-- The routing here is controlled by the routing.html file, which implements page.js routing -->
+        <paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
+          <a data-route="home" href="/">
+            <iron-icon icon="home"></iron-icon>
+            <span>Home</span>
+          </a>
+          <a data-route="events" href="/events">
+            <iron-icon icon="event"></iron-icon>
+            <span>Events</span>
+          </a>
+          <a data-route="issues" href="/issues">
+            <iron-icon icon="error-outline"></iron-icon>
+            <span>Issues</span>
+          </a>
+          <!-- TODO menu items for future navigation plans, potentially issues / other git items -->
+        </paper-menu>
+      </paper-scroll-header-panel>
+
+      <!-- Main Area -->
+      <!-- Tall header that condenses whenever you start scrolling down -->
+      <paper-scroll-header-panel main condenses keep-condensed-header>
+
+        <!-- Main Toolbar -->
+        <paper-toolbar id="mainToolbar" class="tall">
+          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+          <span class="flex"></span>
+
+          <!-- Toolbar -->
+          <git-login id="auth" user="{{user}}"></git-login>
+
+          <!-- Application name -->
+          <div class="middle middle-container center horizontal layout">
+            <div class="app-name">User Dashboard</div>
+          </div>
+
+          <!-- Application sub title -->
+          <div class="bottom bottom-container center horizontal layout">
+              <div class="bottom-title paper-font-subhead">Collections of information retrieved from Github</div>
+          </div>
+
+        </paper-toolbar>
+
+        <!-- Main Content -->
+        <div class="content">
+          <!-- Iron-pages is a great way to be able to navigate between different sections via routing requests. The data routing uses page.js -->
+          <iron-pages attr-for-selected="data-route" selected="{{route}}">
+
+            <section data-route="home">
+              <git-selection></git-selection>
+            </section>
+            
+            <section data-route="events">
+              <git-event-search username="{{username}}" page="{{page}}"></git-event-search>
+              <git-events username="{{username}}" page="{{page}}"></git-events>
+            </section>
+            
+            <section data-route="issues">
+              <git-issue-search username="{{username}}" page="{{page}}"></git-issue-search>
+              <git-issues username="{{username}}" repo="{{repo}}" page="{{page}}"></git-issues>
+            </section>
+            
+            <section data-route="coming-soon">
+              <coming-soon></coming-soon>
+            </section>
+          </iron-pages>
+        </div>
+      </paper-scroll-header-panel>
+    </paper-drawer-panel>
+    
+  </template>
+  
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'git-view',
+
+      properties: {
+        route: String
+      }
+    });
+  })();
+  </script>
+</dom-module>

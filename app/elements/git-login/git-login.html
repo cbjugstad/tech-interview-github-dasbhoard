@@ -1,0 +1,112 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="git-login">
+  <template>
+    <style is="custom-style" include="app-theme shared-styles">
+      :host {
+        display: block;
+      }
+      iron-icon {
+        margin-left: 10px;
+      }
+      paper-menu {
+        width: 170px;
+      }
+      /* The iron icon has an img built into it, and we need to drill down through the shadow dom to get to that since we're not actually including the img in the HTML for this custom element */
+      iron-icon::shadow img {
+        border-radius: 100% !important;
+      }
+      iron-icon {
+        width: 32px;
+        height: 32px;
+      }
+      paper-button {
+        text-transform: none;
+      }
+    </style>
+    
+    <firebase-auth id="firebaseLogin" 
+                   user="{{user}}" 
+                   status-known="{{statusKnown}}" 
+                   location="https://resplendent-inferno-8422.firebaseio.com" 
+                   provider="github" 
+                   on-error="errorHandler"></firebase-auth>
+
+    <paper-button on-tap="login" hidden$="{{computeLoginHidden(statusKnown, user)}}">Login</paper-button>
+    
+    <div hidden$="{{computeLogoutHidden(statusKnown, user)}}">
+      
+      <paper-menu-button>
+        <paper-button class="dropdown-trigger">
+          <span>{{user.github.username}}</span>
+          <iron-icon class="profile-image" src="{{user.github.profileImageURL}}"></iron-icon>
+        </paper-button>
+        <paper-menu class="dropdown-content centered">
+          <a href="/" on-tap="logout">
+            <span>Log out</span>
+          </a>
+        </paper-menu>
+      </paper-menu-button>
+    </div>
+    
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'git-login',
+
+      properties: {
+        message: {
+          type: String,
+          value: ''
+        },
+        user: {
+          notify: true
+        },
+        statusKnown: {
+          type: Boolean
+        }
+        
+      },
+      login: function() {
+        this.$.firebaseLogin.login();
+      },
+      logout: function() {
+        this.$.firebaseLogin.logout();
+        this.user = null;
+        window.location.replace("/");
+      },
+      errorHandler: function(e) {
+        this.message = 'Error: ' + e.detail.message;
+      },
+      computeLoginHidden: function(statusKnown, user) {
+        return !statusKnown || !!user;
+      },
+      computeLogoutHidden: function(statusKnown, user) {
+        return !statusKnown || !user;
+      },
+      computeLoginStatus: function(statusKnown, user) {
+        if (statusKnown && user) {
+          return 'Logged in';
+        }
+        if (statusKnown) {
+          return 'Logged out';
+        }
+        return 'Unknown (checking status...)';
+      }
+    });
+  })();
+  </script>
+</dom-module>

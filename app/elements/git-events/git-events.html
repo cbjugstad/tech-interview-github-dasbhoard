@@ -1,0 +1,198 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="git-events">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .card-row {
+        margin-top: 20px;
+      }
+      .card-row:first-of-type {
+        margin-top: 100px;
+      }
+      img {
+        border-radius: 100%;
+        max-width: 100px;
+        min-width: 20px;
+      }
+      paper-dialog {
+        --paper-dialog-background-color: white;
+        padding-left: 50px;
+        padding-right: 50px;
+      }
+      paper-dialog.size-position {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        width: 300px;
+        height: 300px;
+        overflow: auto;
+      }
+      .card-actions {
+        text-align: center;
+      }
+      .card-actions > paper-button {
+        color: var(--accent-color);
+      }
+    </style>
+    
+    <!-- Because of the rate limit, instead of having the auto property set on the iron-ajax below, we'll just leave it off and handle updates (other than the regularly scheduled ones) manually -->
+    <iron-ajax  
+               id="ajax" 
+               url="{{url}}"
+               handle-as="json"
+               params="{{options}}"
+               last-response="{{response}}"></iron-ajax>
+    
+    <!-- simple responsive Bootstrap container -->
+    <div class="container-fluid">
+      <!-- iterate over each value in the response -->
+      <template is="dom-repeat" items="{{response}}">
+        <div class="row card-row">
+          <!-- col-xs-12 to take up the full 12 columns on extra small + screens (all screens) -->
+          <paper-card heading="" class="col-xs-12">
+            <div class="card-content">
+              <div class="row">
+                <p class="paper-font-title">{{item.type}}</p>
+              </div>
+              <div class="row">
+                <!-- the href$ below is really nice - it lets you do compound bindings between string literals and the bind value -->
+                <a target="_blank" href$="https://github.com/{{item.actor.login}}">
+                  <img src="{{item.actor.avatar_url}}" class="col-xs-3 col-md-2 text-center"> 
+                </a>
+                <div col="col-xs-9 col-md-10">
+                  <p>Username: <a target="_blank" href$="https://github.com/{{item.actor.login}}">{{item.actor.login}}</a></p>
+                  <p>Repository: <a target="_blank" href$="https://github.com/{{item.repo.name}}">{{item.repo.name}}</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <paper-button class="action-button" data-dialog="dialog" onclick="document.querySelector('#dialog').toggle()">More Info</paper-button>
+            </div>
+          </paper-card>
+        </div>
+        
+        <paper-dialog modal id="dialog" entry-animation="fade-in-animation" exit-animation="fade-out-animation" with-backdrop>
+          <div class="row">
+            <a target="_blank" href$="https://github.com/{{item.actor.login}}">
+              <img src="{{item.actor.avatar_url}}" class="col-xs-4 col-xs-offset-4"> 
+            </a>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 text-center paper-font-title">
+              <a target="_blank" href$="https://github.com/{{item.actor.login}}">{{item.actor.login}}</a>
+            </div>
+          </div>
+          <div class="row">
+            <p class="paper-font-subhead">More details for you!</p>
+            <p>Event ID: {{item.id}}</p>
+            <p>Event type: {{item.type}}</p>
+            <p>User ID: {{item.actor.id}}</p>
+            <p>User login: {{item.actor.login}}</p>
+            <p>Repository ID: {{item.repo.id}}</p>
+            <p>Repository name: <a target="_blank" href$="https://github.com/{{item.repo.name}}">{{item.repo.name}}</a></p>
+          </div>
+          <div class="buttons">
+            <paper-button dialog-dismiss>Done</paper-button>
+          </div>
+        </paper-dialog>
+      </template>
+    </div>
+      
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'git-events',
+
+      properties: {
+        user: {
+          notify: true
+        },
+        
+        username: {
+          value: '',
+          notify: true
+        },
+
+        url: {
+          // if either owner or repo changes, this gets recomputed
+          notify: true,
+          computed: 'computeUrl(username)' 
+        },
+
+        options: {
+          computed: 'computeOptions(page)'
+        }
+      },
+      
+      // observers let us see when properties change so that we can call certain functions to do what we want to handle the change
+      // we can also pass in multiple properties into an observer, and the function it calls will only fire if all of the properties actually have a value
+      observers: [
+        
+      ],
+      
+      ready: function() {
+        this.refresh();
+      },
+
+      computeUrl: function(username) {
+        if (this.username == '') {
+          return 'https://api.github.com/events';
+        }
+        else {
+          return ['https://api.github.com/users', username, 'events'].join('/');
+        }
+      },
+
+      computeOptions: function(page) {
+        return {page: page};
+      },
+      
+      toggle: function() {
+        var dialog = this.$.dialog;
+        dialog.toggle();
+      },
+      
+      refresh: function() {
+        console.log("Refreshing");
+        // with the way Polymer does its scoping with the shadow DOM, we need to grab the iron-ajax call by its id (via this.$.ajax) and then use that to generate the request at fixed intervals. The this.$. syntax here is similar to the id selector
+        var _this_ = this.$.ajax;
+        _this_.generateRequest();
+        
+        // if you're logged in, we can make up to 5,000 requests per hour, but otherwise we can only do 60. There may not be much of a reason to do more than 60 per hour, though so I'll keep it to 60. 
+        setInterval(function(){
+          _this_.generateRequest()
+        }, 60000);
+        
+        /*if (this.username == '') {
+          setInterval(function(){
+            _this_.generateRequest()
+          }, 60000);
+        }
+        else {
+          setInterval(function(){
+            _this_.generateRequest()
+          }, 5000);
+        }*/
+        
+      }
+			
+    });
+  })();
+  </script>
+</dom-module>
